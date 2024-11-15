@@ -9,7 +9,13 @@ const wss = new WebSocket.Server({ server });
 
 let currentFavicon = 'red.ico'; // Default favicon
 
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the 'public' directory
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve index.html when accessing the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 wss.on('connection', (ws) => {
     console.log('A user connected');
